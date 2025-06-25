@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" style="background-color: rgba(235, 187, 183, 0.03); overflow: hidden">
+    <section>
+        <div class="row align-items-center justify-content-center justify-content-lg-between">
+            <div class="col-lg-6 order-lg-2 p-0">
+                <img class="img-fluid" src="~/Content/assets/img/about-1.png" alt="">
+            </div>
+            <div class="col-lg-6 p-5 py-lg-0" style="max-width: 560px">
+                <div class="text-center text-lg-left ml-xl-4">
+                    <h4 class="mb-4">hi there!</h4>
+                    <p class="text-dark" style="font-size: 15px">
+                        Welcome to SkinSeoul! Founded in 2001, we started with a simple mission:
+                        <em>to bring the best of Korean skincare to you, helping our community achieve healthy, glowing skin</em>.<br />
+                        Our journey began in the heart of Prishtina, and since then, we've grown into a beloved destination
+                        for skincare enthusiasts, offering a curated selection of premium products and expert advice.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row align-items-center justify-content-center justify-content-lg-start">
+            <div class="col-lg-6 p-0">
+                <img class="img-fluid" src="~/Content/assets/img/about-2.png" alt="">
+            </div>
+            <div class="col-lg-6 p-5 py-lg-0" style="max-width: 560px">
+                <div class="text-center text-lg-left ml-xl-5">
+                    <h4 class="mb-4">our team</h4>
+                    <p class="text-dark" style="font-size: 15px">
+                        Our team includes licensed estheticians and skincare specialists who stay at the forefront of the latest trends and
+                        research in the industry.<br /> With years of experience, they carefully curate our product selection, ensuring that every item
+                        meets our high standards for quality and effectiveness. Their deep understanding of skin types and concerns allows them
+                        to provide tailored recommendations that cater to your unique needs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row align-items-center justify-content-center justify-content-lg-between">
+            <div class="col-lg-6 order-lg-2 p-0">
+                <img class="img-fluid" src="~/Content/assets/img/about-3.jpg" alt="">
+            </div>
+            <div class="col-lg-6 p-5 py-lg-0" style="max-width: 560px">
+                <div class="text-center text-lg-left ml-xl-4">
+                    <h4 class="mb-4">glow essentials</h4>
+                    <p class="text-dark" style="font-size: 15px">
+                        We offer a thoughtfully curated collection of premium Korean skincare products.
+                        Each item is chosen for its quality and effectiveness, ensuring you find the perfect match for your skin’s needs.<br />
+                        From rejuvenating cleansers and nourishing toners to potent serums and hydrating moisturizers, our range addresses a variety
+                        of concerns. We also feature innovative masks and sun protection options that keep your skin glowing and healthy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mt-lg-5 mb-5">
+        <h4 class="text-center mb-4 pt-lg-2 pt-xl-3">customer reviews</h4>
+        <div class="row pt-2">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0" style="height: 230px">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <div class="mb-2">
+                            <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <p class="card-text">"SkinSeoul transformed my skincare routine! The products are gentle yet effective."</p>
+                        <h5 class="card-title">— Bora H.</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0" style="height: 230px">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <div class="mb-2">
+                            <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <p class="card-text">"I’ve tried many brands, but SkinSeoul stands out! My skin has never felt better!"</p>
+                        <h5 class="card-title">— Zana K.</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0" style="height: 230px">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <div class="mb-2">
+                            <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <p class="card-text">"I can’t get enough of SkinSeoul! Each product is a joy to use, and they deliver amazing results!"</p>
+                        <h5 class="card-title">— Sara B.</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".navbar-nav")[1].getElementsByTagName("a")[3].classList.add("active");
+        document.querySelector("#footer").classList.remove("mt-5");
+    });
+</script>

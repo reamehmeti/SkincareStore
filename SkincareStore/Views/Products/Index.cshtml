@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "Product List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.Products.Rows.Count > 0)
+{
+    <!-- Sidebar Start -->
+    <div class="sidebar bg-light flex-column" id="brandFilterSidebar" style="display: none">
+        <div class="d-flex justify-content-between bg-secondary p-3">
+            <span class="text-dark font-weight-medium">Filter by brand</span>
+            <a href="" id="hideBrandFilterSidebar" style="color: #8c8c8c"><i class="fa fa-times"></i></a>
+        </div>
+        <form>
+            <div class="checkbox-container p-3">
+                @foreach (System.Data.DataRow dr in ViewBag.Brands.Rows)
+                {
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input type="checkbox" class="custom-control-input brand-checkbox" id="brand-@dr["ID"]" value="@dr["ID"]">
+                        <label class="custom-control-label" for="brand-@dr["ID"]">@dr["Name"]</label>
+                        <span class="badge border font-weight-normal" style="width: 40px">@dr["ProductCount"]</span>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+    <!-- Sidebar End -->
+    <!-- Shop Start -->
+    <div class="container-fluid pt-4 mb-n5">
+        <div class="row px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="d-none d-lg-block col-lg-3">
+                <!-- Brand Start -->
+                <div class="mt-4 mb-5">
+                    <h5 class="font-weight-medium mb-4">Filter by brand</h5>
+                    <form>
+                        <div class="checkbox-container" style="max-height: 465px; overflow: auto">
+                            @foreach (System.Data.DataRow dr in ViewBag.Brands.Rows)
+                            {
+                                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                    <input type="checkbox" class="custom-control-input brand-checkbox" id="brand-@dr["ID"]" value="@dr["ID"]">
+                                    <label class="custom-control-label" for="brand-@dr["ID"]">@dr["Name"]</label>
+                                    <span class="badge border font-weight-normal mr-2" style="width: 40px">@dr["ProductCount"]</span>
+                                </div>
+                            }
+                        </div>
+                    </form>
+                </div>
+                <!-- Brand End -->
+            </div>
+            <!-- Shop Sidebar End -->
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-12">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div class="dropdown">
+                                <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                    Sort by
+                                </button>
+                                <button class="btn d-lg-none" style="font-size: 14px" id="showBrandFilterSidebar"><i class="fa fa-filter mr-1"></i>Filter by brand</button>
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="triggerId">
+                                    <a class="dropdown-item sort-by" id="title-ascending" href="">Alphabetically: A-Z</a>
+                                    <a class="dropdown-item sort-by" id="title-descending" href="">Alphabetically: Z-A</a>
+                                    <a class="dropdown-item sort-by" id="price-ascending" href="">Price: Low to High</a>
+                                    <a class="dropdown-item sort-by" id="price-descending" href="">Price: High to Low</a>
+                                    <a class="dropdown-item sort-by" id="highest-rating" href="">Highest Rated</a>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn" id="compress"><i class="fas fa-compress"></i></button>
+                                <button class="btn" id="expand"><i class="fas fa-expand"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (System.Data.DataRow dr in ViewBag.Products.Rows)
+                    {
+                        <div class="col-lg-3 col-md-4 col-6 pb-1 product-items" id="productItem" data-rating="@dr["Rating"]">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    @if (dr["Quantity"].ToString() == "0")
+                                    {
+                                        <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                            <img class="img-fluid w-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt=""
+                                                 style="opacity: 0.5">
+                                            <div class="card-img-overlay d-flex justify-content-center align-items-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+                                                <img src="~/Content/assets/img/sold-out.png" style="width: calc(100% + 100px); opacity: 0.5" />
+                                            </div>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                            <img class="img-fluid w-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt="">
+                                        </a>
+                                    }
+                                    <form class="favorite-form" method="post" action="@Url.Action("Favorite", "Products", new { product = dr["ID"] })">
+                                        <button class="btn card-img-overlay" id="btnHeart" type="button">
+                                            @if (bool.Parse(dr["Favorited"].ToString()) == true)
+                                            {
+                                                <i class="fas fa-heart text-primary"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="far fa-heart"></i>
+                                            }
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="card-body border-left border-right border-bottom text-center p-0 pt-4 pb-1">
+                                    <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })" id="productName">
+                                        <h6 class="text-truncate mb-3">@dr["Name"]</h6>
+                                    </a>
+                                    <div class="d-flex justify-content-center">
+                                        <h6>@dr["Price"]€</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <ul class="star-rating px-1">
+                                            <li class="far fa-star"></li>
+                                            <li class="far fa-star"></li>
+                                            <li class="far fa-star"></li>
+                                            <li class="far fa-star"></li>
+                                            <li class="far fa-star"></li>
+                                        </ul>
+                                        <p>(@dr["Rating"])</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-12 pb-1">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center mb-3">
+                                <li class="page-item" id="previous">
+                                    <a class="page-link previous" href="" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                @for (int i = 1; i <= ViewBag.Products.Rows[0]["Pages"]; i++)
+                                {
+                                    <li class="page-item page-links">
+                                        <a class="page-link" href="">@i</a>
+                                    </li>
+                                }
+                                <li class="page-item" id="next">
+                                    <a class="page-link next" href="" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Shop Product End -->
+        </div>
+    </div>
+    <!-- Shop End -->
+}
+else
+{
+    <div class="d-block align-content-center text-center text-dark mt-4" id="noProductsFound" style="min-height: 402px">
+        <i class="fa fa-search fa-3x mb-4"></i>
+        <p class="text-uppercase font-weight-medium mb-2" style="font-size: 18px">No products found</p>
+        <a href="@Url.Action("Index","Products")" class="btn btn-primary mt-2 rounded-pill shadow-sm" style="font-size: 14px">Return to Store</a>
+    </div>
+}
+<script>
+    document.querySelectorAll(".navbar-nav")[1].getElementsByTagName("a")[2].classList.add("active");
+</script>

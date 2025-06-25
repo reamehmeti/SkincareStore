@@ -1,0 +1,238 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SkinSeoul - K-Beauty & Skincare Store</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    <!-- Favicon -->
+    <link href="~/Content/assets/img/logo.png" rel="icon">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <!-- Libraries Stylesheet -->
+    <link href="~/Content/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Content/assets/css/style.css" rel="stylesheet">
+    <!-- jQuery Library -->
+    <script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Cookie Consent Banner Start -->
+    <div id="cookieConsent">
+        This website uses cookies to ensure you get the best experience on our website.
+        <a href="">Learn more</a>.
+        <button id="acceptCookies">Got it!</button>
+    </div>
+    <!-- Cookie Consent Banner End -->
+    <!-- Sidebar Start -->
+    <div class="sidebar bg-light flex-column" id="hamburgerMenu" style="display: none">
+        <nav class="navbar p-0">
+            <div class="navbar-nav w-100">
+                <div class="d-flex justify-content-between bg-secondary p-3">
+                    <span class="text-dark font-weight-medium">Categories</span>
+                    <a href="" id="hideHamburgerMenu" style="color: #8c8c8c"><i class="fa fa-times"></i></a>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link category border-bottom px-3" data-toggle="dropdown">Cleanser <i class="fa fa-angle-down float-right mt-1"></i></a>
+                    <div class="dropdown-menu border border-top-0 rounded-0 w-100 m-0">
+                        <a href="@Url.Action("Index", "Products", new { category = 1 })" class="dropdown-item" style="font-size: 15px">Oil-based</a>
+                        <a href="@Url.Action("Index", "Products", new { category = 2 })" class="dropdown-item" style="font-size: 15px">Water-based</a>
+                    </div>
+                </div>
+                <a href="@Url.Action("Index", "Products", new { category = 3 })" class="nav-item nav-link category border-bottom px-3">Toner</a>
+                <a href="@Url.Action("Index", "Products", new { category = 4 })" class="nav-item nav-link category border-bottom px-3">Serum</a>
+                <a href="@Url.Action("Index", "Products", new { category = 5 })" class="nav-item nav-link category border-bottom px-3">Essence</a>
+                <a href="@Url.Action("Index", "Products", new { category = 6 })" class="nav-item nav-link category border-bottom px-3">Moisturizer</a>
+                <a href="@Url.Action("Index", "Products", new { category = 7 })" class="nav-item nav-link category border-bottom px-3">Sunscreen</a>
+                <a href="@Url.Action("Index", "Products", new { category = 8 })" class="nav-item nav-link category border-bottom px-3">Eye Cream</a>
+                <a href="@Url.Action("Index", "Products", new { category = 9 })" class="nav-item nav-link category border-bottom px-3">Mask</a>
+                <a href="@Url.Action("Index", "Products", new { category = 10 })" class="nav-item nav-link category border-bottom px-3">Acne Patches</a>
+                <a href="@Url.Action("Index", "Products", new { category = 11 })" class="nav-item nav-link category border-bottom px-3">Makeup</a>
+                <a href="@Url.Action("Index", "Products", new { category = 12 })" class="nav-item nav-link category border-bottom px-3">Hair Care</a>
+            </div>
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="">FAQs</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Help</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Support</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold mr-1 font-italic">Skin</span>Seoul</h1>
+                </a>
+            </div>
+            <div class="col-md-6 col-12 order-1 order-md-0 text-left">
+                <form action="" style="position: relative">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search for products" autocomplete="off" value="@Request.QueryString["search"]">
+                        <div class="input-group-append">
+                            <button class="input-group-text bg-transparent text-primary" id="searchButton">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="searchResults" style="display: none">
+
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 text-right mb-2 mb-md-0">
+                <a href="@Url.Action("Favorite", "Products")" class="btn border nav-icon" id="navFavorites">
+                    <i class="fas fa-heart text-primary"></i>
+                    <span class="badge badge-favorites">@ViewBag.Favorites</span>
+                </a>
+                <a href="@Url.Action("Cart", "Products")" class="btn border nav-icon" id="navShoppingCart">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge badge-cart">@ViewBag.CartQuantityTotal</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <div class="container-fluid">
+        <div class="row border-top px-xl-5" style="box-shadow: 0 6px 8px rgba(0, 0, 0, 0.05)">
+            <div class="col-lg-9" id="main-navbar-container">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold mr-1 font-italic">Skin</span>Seoul</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-2 py-lg-0">
+                            <a href="" class="nav-item nav-link d-none d-lg-block" id="showHamburgerMenu"><i class="fa fa-bars"></i></a>
+                            <a href="@Url.Action("Index","Home")" class="nav-item nav-link">Home</a>
+                            <a href="@Url.Action("Index", "Products")" class="nav-item nav-link">Shop</a>
+                            <a href="@Url.Action("About", "Home")" class="nav-item nav-link">About</a>
+                            <a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+                            <a href="" class="nav-item nav-link d-block d-lg-none" id="showHamburgerMenu">Categories</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+    <!-- Content Body Start -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+    <div class="position-relative">
+        <div id="overlay"></div>
+        <div class="content-body" id="content">
+            @RenderBody()
+        </div>
+        <!-- Content Body End -->
+        <!-- Footer Start -->
+        <div class="container-fluid bg-secondary text-dark mt-5 pt-5" id="footer">
+            <div class="row px-xl-5">
+                <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                    <a href="" class="text-decoration-none">
+                        <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold mr-1 font-italic">Skin</span>Seoul</h1>
+                    </a>
+                    <p>Radiance awaits at our K-beauty haven: where innovation and beauty meet. Explore our curated collection for flawless skin and captivating looks.</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Pristina, Prishtinë, Kosova</p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>skinseoul@outlook.com</p>
+                    <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+383 44 123 456</p>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <div class="row justify-content-around">
+                        <div class="col-md-4 mb-5">
+                            <h5 class="font-weight-bold text-dark mb-4">Footer Menu</h5>
+                            <div class="d-flex flex-column justify-content-start">
+                                <a class="text-dark mb-2" href="@Url.Action("Index","Home")"><i class="fa fa-angle-right mr-2"></i>Home Page</a>
+                                <a class="text-dark mb-2" href="@Url.Action("Index","Products")"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                                <a class="text-dark mb-2" href="@Url.Action("About","Home")"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                                <a class="text-dark" href="@Url.Action("Contact","Home")"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+                            <form action="">
+                                <div class="form-group">
+                                    <input type="text" class="form-control border-0 py-4" placeholder="Your Name" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
+                                           required="required" />
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top border-light mx-xl-5 py-4">
+                <div class="col-md-6 px-xl-0">
+                    <p class="mb-md-0 text-center text-md-left text-dark">
+                        &copy; <a class="text-dark font-weight-semi-bold" href="#">SkinSeoul</a>. All Rights Reserved. Designed
+                        by
+                        <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
+                        Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    <!-- Alerts Start -->
+    <div id="alertsContainer" class="mt-2 mt-lg-3"></div>
+    <!-- Alerts End -->
+    <!-- JavaScript Libraries -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/assets/lib/easing/easing.min.js"></script>
+    <script src="~/Content/assets/lib/owlcarousel/owl.carousel.min.js"></script>
+    <!-- Contact Javascript File -->
+    <script src="~/Content/assets/mail/jqBootstrapValidation.min.js"></script>
+    <script src="~/Content/assets/mail/contact.js"></script>
+    <!-- Template Javascript -->
+    <script src="~/Content/assets/js/main.js"></script>
+    <script src="~/Content/assets/js/custom.js"></script>
+</body>
+
+</html>

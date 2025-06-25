@@ -1,0 +1,302 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Carousel Start -->
+<div id="header-carousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" style="height: 410px;">
+            <img class="img-fluid" src="~/Content/assets/img/carousel-1.png" alt="">
+            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                <div class="p-3" style="max-width: 700px;">
+                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Begin Your Glow-Up Journey Today!</h4>
+                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">K-Beauty & Skincare</h3>
+                    <a href="@Url.Action("Index","Products")" class="btn btn-light py-2 px-3">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item" style="height: 410px;">
+            <img class="img-fluid" src="~/Content/assets/img/carousel-2.png" alt="">
+            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                <div class="p-3" style="max-width: 700px;">
+                    <h4 class="text-light text-uppercase font-weight-medium mb-3">The Finest Selection for Your Beauty Needs.</h4>
+                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Discover Your Skincare Essentials</h3>
+                    <a href="@Url.Action("Index","Products")" class="btn btn-light py-2 px-3">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+            <span class="carousel-control-prev-icon mb-n2"></span>
+        </div>
+    </a>
+    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+            <span class="carousel-control-next-icon mb-n2"></span>
+        </div>
+    </a>
+</div>
+<!-- Carousel End -->
+<!-- Featured Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-6 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                <h5 class="font-weight-semi-bold m-0">Free Shipping</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Quick Support</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured End -->
+<!-- Products Start -->
+<div class="container-fluid">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">New Products</span></h2>
+    </div>
+    <div class="row px-xl-5 pt-1">
+        <div class="col">
+            <div class="owl-carousel related-carousel">
+                @foreach (System.Data.DataRow dr in ViewBag.NewProducts.Rows)
+                {
+                    <div class="pt-2" id="productItem" data-rating="@dr["Rating"]">
+                        <div class="card product-item border-0 mb-4">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                @if (dr["Quantity"].ToString() == "0")
+                                {
+                                    <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                        <img class="img-fluid w-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt=""
+                                             style="opacity: 0.5">
+                                        <div class="card-img-overlay d-flex justify-content-center align-items-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+                                            <img src="~/Content/assets/img/sold-out.png" style="width: calc(100% + 100px); opacity: 0.5" />
+                                        </div>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                        <img class="img-fluid w-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt="">
+                                    </a>
+                                }
+                                <form class="favorite-form" method="post" action="@Url.Action("Favorite", "Products", new { product = dr["ID"] })">
+                                    <button class="btn card-img-overlay" id="btnHeart" type="button">
+                                        @if (bool.Parse(dr["Favorited"].ToString()) == true)
+                                        {
+                                            <i class="fas fa-heart text-primary"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-heart"></i>
+                                        }
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="card-body border-left border-right border-bottom text-center p-0 pt-4 pb-1">
+                                <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })" id="productName">
+                                    <h6 class="text-truncate mb-3">@dr["Name"]</h6>
+                                </a>
+                                <div class="d-flex justify-content-center">
+                                    <h6>@dr["Price"]€</h6>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <ul class="star-rating px-1">
+                                        <li class="far fa-star"></li>
+                                        <li class="far fa-star"></li>
+                                        <li class="far fa-star"></li>
+                                        <li class="far fa-star"></li>
+                                        <li class="far fa-star"></li>
+                                    </ul>
+                                    <p>(@dr["Rating"])</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Products End -->
+<!-- Offer Start -->
+<div class="container-fluid offer pt-4">
+    <div class="row px-xl-5">
+        <div class="col-md-6 pb-4">
+            <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
+                <img src="~/Content/assets/img/offer-1.png" alt="">
+                <div class="position-relative" style="z-index: 1;">
+                    <h5 class="text-uppercase text-primary mb-3">For every face, regardless of gender!</h5>
+                    <h1 class="mb-4 font-weight-semi-bold">Our Products</h1>
+                    <a href="@Url.Action("Index","Products")" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 pb-4">
+            <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
+                <img src="~/Content/assets/img/offer-2.png" alt="">
+                <div class="position-relative" style="z-index: 1;">
+                    <h5 class="text-uppercase text-primary mb-3">Explore award-winning products.</h5>
+                    <h1 class="mb-4 font-weight-semi-bold">Our Collection</h1>
+                    <a href="@Url.Action("Index","Products")" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Offer End -->
+<!-- Vendor Start -->
+<div class="container-fluid pt-3">
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel vendor-carousel">
+                <div class="vendor-item border p-4">
+                    <img src="~/Content/assets/img/vendor-1.jpg" alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src="~/Content/assets/img/vendor-2.png" alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src="~/Content/assets/img/vendor-3.png" alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src="~/Content/assets/img/vendor-4.png" alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src="~/Content/assets/img/vendor-5.png" alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src="~/Content/assets/img/vendor-6.jpg" alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src="~/Content/assets/img/vendor-7.jpg" alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src="~/Content/assets/img/vendor-8.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Vendor End -->
+<!-- Products Start -->
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Top Rated</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        @foreach (System.Data.DataRow dr in ViewBag.TopRatedProducts.Rows)
+        {
+            <div class="col-md-3 col-6 pt-3 pb-1" id="productItem" data-rating="@dr["Rating"]">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        @if (dr["Quantity"].ToString() == "0")
+                        {
+                            <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                <img class="img-fluid w-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt=""
+                                     style="opacity: 0.5">
+                                <div class="card-img-overlay d-flex justify-content-center align-items-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+                                    <img src="~/Content/assets/img/sold-out.png" style="width: calc(100% + 100px); opacity: 0.5" />
+                                </div>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                <img class="img-fluid w-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt="">
+                            </a>
+                        }
+                        <form class="favorite-form" method="post" action="@Url.Action("Favorite", "Products", new { product = dr["ID"] })">
+                            <button class="btn card-img-overlay" id="btnHeart" type="button">
+                                @if (bool.Parse(dr["Favorited"].ToString()) == true)
+                                {
+                                    <i class="fas fa-heart text-primary"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-heart"></i>
+                                }
+                            </button>
+                        </form>
+                    </div>
+                    <div class="card-body border-left border-right border-bottom text-center p-0 pt-4 pb-1">
+                        <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })" id="productName">
+                            <h6 class="text-truncate mb-3">@dr["Name"]</h6>
+                        </a>
+                        <div class="d-flex justify-content-center">
+                            <h6>@dr["Price"]€</h6>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <ul class="star-rating px-1">
+                                <li class="far fa-star"></li>
+                                <li class="far fa-star"></li>
+                                <li class="far fa-star"></li>
+                                <li class="far fa-star"></li>
+                                <li class="far fa-star"></li>
+                            </ul>
+                            <p>(@dr["Rating"])</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- Products End -->
+<!-- Container Start -->
+<div class="py-3">
+    <video style="width: 100%; height: 500px; object-fit: cover" controls>
+        <source src="~/Content/assets/img/cosrx-snail-line.mp4" type="video/mp4">
+    </video>
+</div>
+<!-- Container End -->
+<!-- Navigation Start -->
+<div class="container-fluid pt-5">
+    <div class="row justify-content-center" id="brandHistory">
+        <img class="pb-3" src="~/Content/assets/img/beauty-of-joseon.jpg" alt="" width="450" height="450" />
+        <div class="col-md-4 col-sm-10 px-5 text-md-left text-center">
+            <h6 class="text-uppercase text-primary mb-3">
+                Brand history
+            </h6>
+            <h5 class="text-uppercase text-primary mb-4">
+                Beauty of Joseon
+            </h5>
+            <p style="font-size: 14px">
+                Inspired to create a skincare line blending ancient Korean beauty rituals with modern technology, Beauty of Joseon was
+                established by Sumin Lee. Drawing from the Joseon Dynasty, which ruled Korea from the late 14th to late 19th century, she
+                created skincare products focusing on natural ingredients and gentle formulas.
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-center px-5 pt-1" id="brandNavigation">
+        <a class="ml-0 text-muted" style="cursor: pointer; pointer-events: none; font-size: 17px" onclick="ShowBeautyOfJoseon()">Beauty of Joseon</a>
+        <a class="ml-3" style="cursor: pointer" onclick="ShowInnisfree()">Innisfree</a>
+        <a class="ml-3" style="cursor: pointer" onclick="ShowCosrx()">Cosrx</a>
+        <a class="ml-3" style="cursor: pointer" onclick="ShowAromatica()">Aromatica</a>
+        <a class="ml-3" style="cursor: pointer" onclick="ShowPurito()">Purito</a>
+        <a class="ml-3" style="cursor: pointer" onclick="ShowRoundLab()">Round Lab</a>
+    </div>
+</div>
+<!-- Navigation End -->
+
+<script>
+    document.querySelectorAll(".navbar-nav")[1].getElementsByTagName("a")[1].classList.add("active");
+</script>

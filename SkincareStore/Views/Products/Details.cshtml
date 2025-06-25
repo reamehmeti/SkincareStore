@@ -1,0 +1,173 @@
+﻿@model SkincareStore.Models.Product
+
+@{
+    ViewBag.Title = "Product Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Shop Detail Start -->
+<div class="container-fluid pt-5 pb-3">
+    <div class="row px-xl-5 justify-content-center">
+        <div class="col-11 col-md-8 col-lg-6 col-xl-5 pb-4">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    @foreach (System.Data.DataRow dr in ViewBag.Pictures.Rows)
+                    {
+                        <div class="carousel-item">
+                            <img class="w-100 h-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt="">
+                            @if (Model.Quantity == 0)
+                            {
+                                <div class="card-img-overlay d-flex justify-content-center align-items-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+                                    <img src="~/Content/assets/img/sold-out.png" style="width: calc(100% + 100px)" />
+                                </div>
+                            }
+                        </div>
+                    }
+                    <form class="favorite-form" method="post" action="@Url.Action("Favorite", "Products", new { product = Model.ProductID })">
+                        <button class="btn card-img-overlay" id="btnHeart" type="button">
+                            @if (Model.Favorited == true)
+                            {
+                                <i class="fas fa-heart text-primary"></i>
+                            }
+                            else
+                            {
+                                <i class="far fa-heart"></i>
+                            }
+                        </button>
+                    </form>
+                </div>
+                @if (ViewBag.Pictures.Rows.Count > 1)
+                {
+                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                        <i class="fa fa-2x fa-angle-left text-dark"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                        <i class="fa fa-2x fa-angle-right text-dark"></i>
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="col-11 col-lg-6 text-center text-lg-left pb-2 pb-lg-0 pl-lg-2 pl-xl-4" id="productItem" data-rating="@Model.Rating" data-quantity="@Model.Quantity">
+            <div class="d-flex justify-content-center justify-content-lg-start">
+                <a href="@Url.Action("Index","Home")" style="font-size: 11px; margin-top: 2px"><i class="fa fa-home"></i></a><pre> / </pre>
+                <a href="@Url.Action("Index","Products")" style="font-size: 13px">Shop</a><pre> / </pre>
+                <a href="@Url.Action("Index", "Products", new { brand = Model.Brand })" style="font-size: 13px">@Model.BrandName</a><pre> / </pre>
+            </div>
+            <h4 class="font-weight-semi-bold">@Model.Name</h4>
+            <div class="d-flex justify-content-center justify-content-lg-start">
+                <div class="star-rating mr-1">
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <p class="product-info mb-2">(@Model.Rating)</p>
+            </div>
+            @if (Model.Quantity == 0)
+            {
+                <p class="text-danger product-info">Sorry, this item is temporarily out of stock.</p>
+            }
+            @if (Model.Quantity > 0 && Model.Quantity < 10)
+            {
+                <p class="text-danger product-info">Hurry up! Only @Model.Quantity unit(s) left in stock.</p>
+            }
+            <h4 class="font-weight-semi-bold mt-2 mb-4">@Model.Price€</h4>
+            <p class="text-justify product-info mb-4">@Model.Description</p>
+            @using (Html.BeginForm("Cart", "Products", FormMethod.Post))
+            {
+                <div class="d-flex justify-content-center justify-content-lg-start align-items-center mb-4 pt-2">
+                    @Html.HiddenFor(Model => Model.ProductID)
+                    @Html.HiddenFor(Model => Model.CartQuantity)
+                    <div class="input-group quantity mr-3" style="width: 130px; height: 38px; border: 1px solid #EDF1FF">
+                        <div class="input-group-btn">
+                            <button class="btn text-primary btn-minus input-quantity" type="button">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        @Html.EditorFor(model => model.PurchaseQuantity, new { htmlAttributes = new { @class = "form-control bg-transparent text-center border-0 input-quantity", @type = "text" } })
+                        <div class="input-group-btn">
+                            <button class="btn text-primary btn-plus input-quantity" type="button">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary px-3 add-to-cart" id="addToCart" type="button"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Shop Detail End -->
+<!-- Products Start -->
+<div class="container-fluid">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">You May Also Like</span></h2>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel related-carousel">
+                @foreach (System.Data.DataRow dr in ViewBag.SimilarProducts.Rows)
+                {
+                    <div class="pt-3 pt-lg-2" id="productItem" data-rating="@dr["Rating"]">
+                        <div class="card product-item border-0">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                @if (dr["Quantity"].ToString() == "0")
+                                {
+                                    <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                        <img class="img-fluid w-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt=""
+                                             style="opacity: 0.5">
+                                        <div class="card-img-overlay d-flex justify-content-center align-items-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+                                            <img src="~/Content/assets/img/sold-out.png" style="width: calc(100% + 100px); opacity: 0.5" />
+                                        </div>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                        <img class="img-fluid w-100" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt="">
+                                    </a>
+                                }
+                                <form class="favorite-form" method="post" action="@Url.Action("Favorite", "Products", new { product = dr["ID"] })">
+                                    <button class="btn card-img-overlay" id="btnHeart" type="button">
+                                        @if (bool.Parse(dr["Favorited"].ToString()) == true)
+                                        {
+                                            <i class="fas fa-heart text-primary"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-heart"></i>
+                                        }
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="card-body border-left border-right border-bottom text-center p-0 pt-4 pb-1">
+                                <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })" id="productName">
+                                    <h6 class="text-truncate mb-3">@dr["Name"]</h6>
+                                </a>
+                                <div class="d-flex justify-content-center">
+                                    <h6>@dr["Price"]€</h6>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <ul class="star-rating px-1">
+                                        <li class="far fa-star"></li>
+                                        <li class="far fa-star"></li>
+                                        <li class="far fa-star"></li>
+                                        <li class="far fa-star"></li>
+                                        <li class="far fa-star"></li>
+                                    </ul>
+                                    <p>(@dr["Rating"])</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Products End -->
+
+<script>
+    document.querySelectorAll(".navbar-nav")[1].getElementsByTagName("a")[2].classList.add("active");
+</script>

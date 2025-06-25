@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Cart Start -->
+<div class="container-fluid pt-4">
+    <div class="row px-xl-5 cart-container">
+        <div class="col-lg-8 table-responsive mb-4 mb-lg-0">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="my-3" style="padding-left: 12px">My Shopping Cart</h5>
+                <a href="@Url.Action("Index","Products")" class="mr-2" style="font-size: 13px">Return to Store</a>
+            </div>
+            <table class="table text-center mb-0">
+                <thead class="table-borderless text-dark">
+                    <tr>
+                        <th class="font-weight-medium text-left">Product</th>
+                        <th></th>
+                        <th class="font-weight-medium d-none d-sm-table-cell">Price</th>
+                        <th class="font-weight-medium">Quantity</th>
+                        <th class="font-weight-medium">Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle" style="font-size: 14px">
+                    @foreach (System.Data.DataRow dr in ViewBag.ShoppingCart.Rows)
+                    {
+                        <tr data-quantity="@dr["MaxQuantity"]">
+                            <td class="align-middle text-left">
+                                <div class="product-item mr-n5" style="width: 70px">
+                                    <div class="product-img">
+                                        <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })">
+                                            <div class="overflow-hidden">
+                                                <img class="img-fluid" src="data:image;base64,@System.Convert.ToBase64String((byte[])@dr["Picture"])" alt="">
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle text-left">
+                                <div style="max-width: 95px" id="productNameContainer">
+                                    <a href="@Url.Action("Details", "Products", new { id = dr["ID"] })" id="productName" style="color: #6f6f6f">@dr["Name"]</a>
+                                </div>
+                            </td>
+                            <td class="align-middle d-none d-sm-table-cell">@dr["Price"]€</td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px; border: 1px solid #EDF1FF">
+                                    <div class="input-group-btn">
+                                        <form class="manage-cart" method="post" action="@Url.Action("Cart", "Products", new { id = dr["ID"], quantity = -1 })">
+                                            <button class="btn btn-sm text-primary btn-minus" type="button">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <span class="form-control form-control-sm bg-transparent text-center border-0">@dr["Quantity"]</span>
+                                    <div class="input-group-btn">
+                                        <form class="manage-cart" method="post" action="@Url.Action("Cart", "Products", new { id = dr["ID"], quantity = 1 })">
+                                            <button class="btn btn-sm text-primary btn-plus" type="button">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">@dr["Total"]€</td>
+                            <td class="align-middle">
+                                <form class="manage-cart" method="post" action="@Url.Action("Cart", "Products", new { id = dr["ID"], quantity = 0 })">
+                                    <button class="btn btn-sm btn-remove" id="btnRemove" type="button" style="font-size: 16px"><i class="fa fa-times"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-secondary">
+                <div class="card-header bg-secondary border-0">
+                    <h5 class="font-weight-medium m-0">Cart Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-normal">Subtotal</h6>
+                        <h6 class="font-weight-normal">@ViewBag.CartSummary€</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-normal">Shipping</h6>
+                        <h6 class="font-weight-normal">0€</h6>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h6 class="font-weight-semi-bold">Total</h6>
+                        <h6 class="font-weight-semi-bold">@ViewBag.CartSummary€</h6>
+                    </div>
+                    <a href="@Url.Action("Checkout","Products")" class="btn btn-block btn-primary my-3 py-2">Proceed To Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-none align-content-center text-center text-dark" id="shoppingCartEmpty" style="min-height: 402px">
+        <i class="fa fa-shopping-cart fa-3x mb-4"></i>
+        <p class="text-uppercase font-weight-medium mb-2" style="font-size: 18px">Cart empty</p>
+        <a href="@Url.Action("Index","Products")" class="btn btn-primary mt-2 rounded-pill shadow-sm" style="font-size: 14px">Return to Store</a>
+    </div>
+</div>
+<!-- Cart End -->
+
+<script>
+    document.querySelector("#navShoppingCart").setAttribute("class", "btn bg-primary");
+    document.querySelector("#navShoppingCart").querySelector("i").setAttribute("class", "fas fa-shopping-cart text-white");
+</script>
